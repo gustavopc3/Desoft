@@ -1,0 +1,152 @@
+#Jogo de Craps
+import math
+import random
+#Informações iniciais:
+print('Olá, você acabou de entrar no jogo Craps Insper! Seu total de fichas inicialmente é 100.')
+print('Nesse jogo, dois dados são jogados, e o seu objetivo é acertar a soma desses dados.')
+print('Na fase inicial, ou Come out, existem 4 tipos de apostas a serem feitas, sendo elas: Pass line bet, Field, Any craps e Twelve.')
+print('Já na fase seguinte, chamada Point, você será capaz de realizar todas as apostas da primeira fase, exceto Pass line bet.')
+print('Caso deseje sair do jogo, insira Nenhuma no seu tipo de aposta e o número 0 na quantia que deseja apostar')
+print('Boa sorte')
+total_fichas=100
+quero_jogar=True
+#Fase 'Come out'.
+while total_fichas>0 and quero_jogar==True:
+    print('Fase Come out')
+    tipo_de_aposta=str(input('Qual aposta você deseja realizar? '))
+    aposta=int(input('Quantas fichas deseja apostar? '))
+    dado_1=random.randint(1,6)
+    dado_2=random.randint(1,6)
+    numero_sorteado=dado_1 + dado_2
+#Aposta 'Any craps':    
+    if tipo_de_aposta=='Any craps':
+        print('Aposta Any craps')
+        print('Soma dos dados igual a {0}.'.format(numero_sorteado))
+        if numero_sorteado==2 or numero_sorteado==3 or numero_sorteado==12:
+            total_fichas+=aposta*7
+            print('Parabéns, você ganhou o dobro de sua aposta {0}!'.format(aposta*7))
+            print('{0} fichas restantes.'.format(total_fichas)) 
+        else:
+            total_fichas-=aposta  
+            print('Você perdeu {0} fichas.'.format(aposta))
+            print('{0} fichas restantes.'.format(total_fichas))    
+#Aposta 'Twelve':
+    if tipo_de_aposta=='Twelve':
+        print('Aposta Twelve')
+        print('Soma dos dados igual a {0}.'.format(numero_sorteado))
+        if numero_sorteado==12:
+            total_fichas+=aposta*30
+            print('Parabéns, você ganhou {0} fichas!'.format(aposta*30))
+            print('{0} fichas restantes.'.format(total_fichas)) 
+        else:
+            total_fichas-=aposta
+            print('Você perdeu {0} fichas.'.format(aposta))
+            print('{0} fichas restantes.'.format(total_fichas)) 
+#Aposta 'Field':    
+    if tipo_de_aposta=='Field':
+        print('Aposta Field')
+        print('Soma dos dados igual a {0}.'.format(numero_sorteado))
+        if numero_sorteado>=5 and numero_sorteado<=8:
+            total_fichas-=aposta
+            print('Você perdeu {0} fichas.'.format(aposta))
+            print('{0} fichas restantes.'.format(total_fichas)) 
+        elif numero_sorteado==2:
+            total_fichas+=aposta*2
+            print('Você ganhou {0} fichas!'.format(aposta*2))
+            print('{0} fichas restantes.'.format(total_fichas)) 
+        else:
+            total_fichas+=aposta
+            print('Parabéns, você ganhou {0} fichas!'.format(aposta))
+            print('{0} fichas restantes.'.format(total_fichas))        
+#Aposta 'Pass line bet':
+    if tipo_de_aposta=='Pass line bet':
+        print('Aposta Pass line bet')
+        print('Soma dos dados igual a {0}.'.format(numero_sorteado))
+        if numero_sorteado==7 or numero_sorteado==11:
+            total_fichas+=aposta
+            print('Parabéns, você ganhou {0} fichas!'.format(aposta))
+            print('{0} fichas restantes.'.format(total_fichas)) 
+        elif numero_sorteado==2 or numero_sorteado==3 or numero_sorteado==12:
+            total_fichas-=aposta
+            print('Você perdeu {0} fichas.'.format(aposta))
+            print('{0} fichas restantes.'.format(total_fichas)) 
+        else:
+#Fase 'Point'.    
+            print('Você passou para a fase point!')
+            while tipo_de_aposta=='Pass line bet':
+                print('Fase Point')
+                tipo_de_aposta2=str(input('Você deseja fazer outra aposta? '))
+                aposta2=int(input('Quantas fichas deseja apostar? '))
+                dado_point1=random.randint(1,6)
+                dado_point2=random.randint(1,6)
+                sorteio_point=dado_point1+dado_point2
+                quero_realizar_outra_aposta=True
+                print('Aposta Pass line bet')
+                print('Soma dos dados igual a {0}.'.format(sorteio_point))
+                if sorteio_point==7:
+                    total_fichas-=aposta
+                    print('Você perdeu {0} fichas.'.format(aposta))
+                    print('{0} fichas restantes.'.format(total_fichas)) 
+                    break
+                elif sorteio_point==numero_sorteado:
+                    total_fichas+=aposta
+                    print('Parabéns, você ganhou {0} fichas!'.format(aposta))
+                    print('{0} fichas restantes.'.format(total_fichas)) 
+                    break                                                          
+                while quero_realizar_outra_aposta==True:
+#Aposta 'Any craps':   
+                    if tipo_de_aposta2=='Any craps':
+                        print('Aposta Any craps')
+                        print('Soma dos dados igual a {0}.'.format(sorteio_point))
+                        if sorteio_point==2 or sorteio_point==3 or sorteio_point==12:
+                            total_fichas+=aposta2*7
+                            print('Parabéns, você ganhou {0} fichas!'.format(aposta2*7))
+                            print('{0} fichas restantes.'.format(total_fichas)) 
+                            break
+                        else:
+                            total_fichas-=aposta2  
+                            print('Você perdeu {0} fichas.'.format(aposta2))
+                            print('{0} fichas restantes.'.format(total_fichas)) 
+                            break  
+#Aposta 'Twelve':
+                    if tipo_de_aposta2=='Twelve':
+                        print('Aposta Twelve')
+                        print('Soma dos dados igual a {0}.'.format(sorteio_point))
+                        if sorteio_point==12:
+                            total_fichas+=aposta2*30
+                            print('Parabéns, você ganhou {0} fichas!'.format(aposta2*30))
+                            print('{0} fichas restantes.'.format(total_fichas)) 
+                            break
+                        else:
+                            total_fichas-=aposta
+                            print('Você perdeu {0} fichas.'.format(aposta2))
+                            print('{0} fichas restantes.'.format(total_fichas)) 
+                            break
+#Aposta 'Field':    
+                    if tipo_de_aposta2=='Field':
+                        print('Aposta Field')
+                        print('Soma dos dados igual a {0}.'.format(sorteio_point))
+                        if sorteio_point>=5 and sorteio_point<=8:
+                            total_fichas-=aposta2
+                            print('Você perdeu {0} fichas.'.format(aposta2))
+                            print('{0} fichas restantes.'.format(total_fichas)) 
+                            break
+                        elif sorteio_point==2:
+                            total_fichas+=aposta2*2
+                            print('Parabéns, você ganhou {0} fichas!'.format(aposta2*2))
+                            print('{0} fichas restantes.'.format(total_fichas)) 
+                            break
+                        else:
+                            total_fichas+=aposta
+                            print('Parabéns, você ganhou {0} fichas!'.format(aposta2))
+                            print('{0} fichas restantes.'.format(total_fichas)) 
+                            break
+#Não deseja apostar novamente na fase Point:
+                    if tipo_de_aposta2=='Não':
+                        quero_realizar_outra_aposta=False
+                        print('Ok, sua aposta Pass in line segue valendo.') 
+#Saída volunária do jogo:
+    if tipo_de_aposta=='Nenhuma':
+        quero_jogar=False     
+print('Fim de jogo.')
+print('Você terminou com {0} fichas.'.format(total_fichas))
